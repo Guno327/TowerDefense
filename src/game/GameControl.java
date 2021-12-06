@@ -33,18 +33,8 @@ public class GameControl implements Runnable, ActionListener
     	// Build a view.
     	
     	view = new GameView (state);
-    	
-    	//Add objects required to begin the game. Backdrop, menu, and the enemy generator
-    	
-    	state.addGameObject(new Backdrop("path.png"));
-    	state.addGameObject(new Menu("menuBackground.png", state));
-    	try {
-    	state.addGameObject(new EnemyGenerator(state, "enemyList.txt"));
-    	}
-    	catch (NullPointerException e) {
-    		System.out.println("Cannot load enemy list");
-    	}
-    	
+
+    	state.addGameObject(new Title(state));
     	//Sets up and starts the timer that controls the game ticks
     	Timer timer;
     	timer = new Timer(16, this);
@@ -68,15 +58,12 @@ public class GameControl implements Runnable, ActionListener
     	previousTime = currentTime;
   
     	//update the game objects
-    	try { 
-    		state.updateAll(elapsedTime);
-    		}
-    	catch (NullPointerException z) {
-    		System.out.println("No enemies were found, aborting tick.");
-    		state.setWaveOver(true);
+    	state.updateAll(elapsedTime);
+    	
+    	if(state.getWave() > 1) {
+    		state.removeAllObjects();
+    		state.addGameObject(new Backdrop("endScreen.png"));
     	}
-    	
-    	
     	//Ensures there are no hanging mouse clicks
     	state.consumeMouseClick();
     	

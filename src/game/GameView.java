@@ -58,6 +58,7 @@ public class GameView extends JPanel implements MouseListener, MouseMotionListen
     	//Sets up the mouse listener to send the event to this class
     	this.addMouseListener(this);
     	this.addMouseMotionListener(this);
+    	
     }
     
     /**
@@ -69,8 +70,7 @@ public class GameView extends JPanel implements MouseListener, MouseMotionListen
      */
     public void paint (Graphics g)
     {
-    	//Draw everything.
-    	state.drawAll(g, this);
+    		state.drawAll(g, this);
     }
     
     public void drawCenteredImage(Graphics g, String name, int x, int y) {
@@ -108,6 +108,7 @@ public class GameView extends JPanel implements MouseListener, MouseMotionListen
 	{
 		state.setMouseLocation(e.getX(), e.getY());	
 	}
+
 
 	
 }

@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class EnemyGenerator implements Animatable{
 	
 	//Fields
-	private double nextCheck;
+	private double sinceCheck;
 	private Scanner list;
 	private GameState state;
 	
@@ -27,7 +27,7 @@ public class EnemyGenerator implements Animatable{
 		ClassLoader loader = this.getClass().getClassLoader();
     	list = new Scanner(loader.getResourceAsStream("resources/" + fileName));    	
 
-		nextCheck = 0.25;
+		sinceCheck = 0;
 		this.state = state;
 	}
 
@@ -38,8 +38,9 @@ public class EnemyGenerator implements Animatable{
 	 * The switch case statement determines which enemy will be spawned, if the file contains a 0 nothing is spawned.
 	 */
 	public void update(double timeElapsed) {
-		if(state.getTotalTime() >= nextCheck) {
-			nextCheck += 0.25;
+		sinceCheck += timeElapsed;
+		if(sinceCheck >= 0.25) {
+			sinceCheck = 0;
 			if(list.hasNextInt()) {
 				switch (list.nextInt()) {
 				case 2:
