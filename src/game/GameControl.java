@@ -60,7 +60,7 @@ public class GameControl implements Runnable, ActionListener
     	//update the game objects
     	state.updateAll(elapsedTime);
     	
-    	if(state.getWave() > 1) {
+    	if(state.getWave() > 10) {
     		state.removeAllObjects();
     		state.addGameObject(new Backdrop("endScreen.png"));
     	}
@@ -69,7 +69,8 @@ public class GameControl implements Runnable, ActionListener
     	
     	//triggers a flag if the life falls below 0
     	if (state.getLife() <= 0) {
-    		state.setGameOver(true);
+    		state.removeAllObjects();
+    		state.addGameObject(new GameOver(state));
     	}
     	
     	//redraws the frame

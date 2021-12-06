@@ -8,40 +8,43 @@
 package game;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.Scanner;
 
-public class EnemyGenerator implements Animatable{
-	
-	//Fields
+public class EnemyGenerator implements Animatable {
+
+	// Fields
 	private double sinceCheck;
 	private Scanner list;
 	private GameState state;
-	
+
 	/**
-	 * Constructor for the enemy generator class. Makes a scanner to read through the list of enemies to be spawned.
+	 * Constructor for the enemy generator class. Makes a scanner to read through
+	 * the list of enemies to be spawned.
 	 * 
-	 * @param state the GameState object
-	 * @param fileName the name of the file that contains the list of enemies to be spawned 
+	 * @param state    the GameState object
+	 * @param fileName the name of the file that contains the list of enemies to be
+	 *                 spawned
 	 */
-	public EnemyGenerator(GameState state, String fileName){
+	public EnemyGenerator(GameState state, String fileName) {
 		ClassLoader loader = this.getClass().getClassLoader();
-    	list = new Scanner(loader.getResourceAsStream("resources/" + fileName));    	
+		list = new Scanner(loader.getResourceAsStream("resources/" + fileName));
 
 		sinceCheck = 0;
 		this.state = state;
 	}
 
 	/**
-	 * Runs every update. Checks to see if enough time has passed to trigger another spawn event.
-	 * If the file has another entry then we check the entry.
-	 * Spawn types are determined by numeric values.
-	 * The switch case statement determines which enemy will be spawned, if the file contains a 0 nothing is spawned.
+	 * Runs every update. Checks to see if enough time has passed to trigger another
+	 * spawn event. If the file has another entry then we check the entry. Spawn
+	 * types are determined by numeric values. The switch case statement determines
+	 * which enemy will be spawned, if the file contains a 0 nothing is spawned.
 	 */
 	public void update(double timeElapsed) {
 		sinceCheck += timeElapsed;
-		if(sinceCheck >= 0.25) {
+		if (sinceCheck >= 0.25) {
 			sinceCheck = 0;
-			if(list.hasNextInt()) {
+			if (list.hasNextInt()) {
 				switch (list.nextInt()) {
 				case 2:
 					state.addGameObject(new EnemySanta(state, 0.0));
@@ -50,7 +53,13 @@ public class EnemyGenerator implements Animatable{
 					state.addGameObject(new EnemyElf(state, 0.0));
 					return;
 				case 0:
+					return;
 				}
+			}
+			else if(state.findNearestEnemy(new Point(0,0)) == null){
+				state.waveOver();
+				state.removeGenerator();
+				state.setGenerator(new EnemyGenerator(state, "enemyList" + state.getWave() + ".txt"));
 			}
 		}
 	}
@@ -59,7 +68,7 @@ public class EnemyGenerator implements Animatable{
 	 * Required to be animatable. Unused in this class.
 	 */
 	public void draw(Graphics g, GameView view) {
-		//your mom
+		// your mom
 	}
 
 }

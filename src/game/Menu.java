@@ -39,6 +39,7 @@ public class Menu implements Animatable{
 			state.addGameObject(new TowerTreeMenu(state, 640, 55));
 			state.addGameObject(new TowerFireMenu(state, 845, 55));
 			state.addGameObject(new StartButton(state , 900, 520));
+			state.addGameObject(new TowerSnowMenu(state, 640, 165));
 			undrawn = false;
 		}
 		
@@ -58,6 +59,11 @@ public class Menu implements Animatable{
 		g.drawString("Credits: " + state.getCredits(), 620 , 475);
 		g.drawString("Score: " + state.getScore(), 620 , 520);
 		g.drawString("Life: " + state.getLife(), 620 , 565);
+		
+		g.setFont(new Font("TimesRoman", Font.BOLD, 12));
+		g.drawString("100 Credits", 700, 65);
+		g.drawString("500 Credits", 905, 65);
+		g.drawString("1000 Credits", 700, 175);
 	}
 
 }

@@ -22,14 +22,14 @@ public class GameState {
 	private int credits;
 	private int life;
 	private int score;
-	private boolean gameOver;
 	private int mouseX, mouseY;
 	private boolean mouseClicked;
 	private double totalTime;
 	private boolean started;
 	private boolean inWave;
 	private int wave;
-	private boolean waveStarted;
+	private boolean wavesStarted;
+	private EnemyGenerator currentGenerator;
 
 	/**
 	 * constructor for GameState. Sets up the lists for animatable objects, sets up
@@ -44,16 +44,16 @@ public class GameState {
 		mouseX = mouseY = 0;
 		mouseClicked = false;
 
-		credits = 1000;
-		life = 1;
+		credits = 200;
+		life = 10;
 		score = 0;
-		gameOver = false;
 		started = false;
 		inWave = false;
-		wave = 0;
-		waveStarted = false;
+		wave = 1;
+		wavesStarted = false;
 
 		totalTime = 0.0;
+		currentGenerator = null;
 	}
 
 	/**
@@ -103,17 +103,6 @@ public class GameState {
 		return credits;
 	}
 
-	/**
-	 * accessor method to access boolean statement determining whether the gameOver
-	 * is true or false.
-	 * 
-	 * @return gameOver boolean to determine whether game over conditions have been
-	 *         met.
-	 */
-	public boolean getGameOver() {
-		return gameOver;
-	}
-
 	public boolean getWaveOver() {
 		return inWave;
 	}
@@ -156,16 +145,6 @@ public class GameState {
 	}
 
 	/**
-	 * mutator method that sets the gameOver to a boolean statement.
-	 * 
-	 * @param gameOver boolean to determine whether game over conditions have been
-	 *                 met.
-	 */
-	public void setGameOver(boolean gameOver) {
-		this.gameOver = gameOver;
-	}
-
-	/**
 	 * mutator method that sets the totalTime to a given value.
 	 * 
 	 * @param time double value that records the total time since the program
@@ -186,8 +165,10 @@ public class GameState {
 		this.mouseY = y;
 	}
 
-	public void setWaveOver(boolean waveOver) {
-		this.inWave = waveOver;
+	public void waveOver() {
+			inWave = false; 
+			wavesStarted = false;
+			wave++;
 	}
 
 	/**
@@ -232,8 +213,11 @@ public class GameState {
 	}
 
 	public void startWave() {
-		wave++;
 		inWave = true;
+	}
+	
+	public void setGenerator(EnemyGenerator generator) {
+		currentGenerator = generator;
 	}
 
 	/**
@@ -284,15 +268,15 @@ public class GameState {
 
 		// if we are supposed to be in a wave but the enemy spawning hasnt started,
 		// start the spawning
-		if (inWave && !waveStarted) {
-			gameObjects.add(new EnemyGenerator(this, "enemyList" + wave + ".txt"));
-			waveStarted = true;
+		if (inWave && !wavesStarted) {
+			wavesStarted = true;
+			currentGenerator = new EnemyGenerator(this, "enemyList" + wave + ".txt");
+			
 		}
-		try {
-			// if the game is not over yet
-			if (!gameOver) {
 				// if we are in a wave we want to update everything
-				if (inWave) {
+				if (inWave && wavesStarted) {
+					currentGenerator.update(elapsedTime);
+					
 					for (Animatable a : gameObjects) {
 						a.update(elapsedTime);
 					}
@@ -302,7 +286,7 @@ public class GameState {
 				else {
 
 					for (Animatable a : gameObjects) {
-						if (!(a instanceof TowerFire) && !(a instanceof TowerTree)) {
+						if (!(a instanceof TowerFire) && !(a instanceof TowerTree) && !(a instanceof TowerSnow)) {
 							a.update(elapsedTime);
 						}
 					}
@@ -312,21 +296,6 @@ public class GameState {
 
 				gameObjects.addAll(objectsToAdd);
 				objectsToAdd.clear();
-
-			}
-			
-			else if(gameOver) {
-				removeAllObjects();
-				addGameObject(new GameOver(this));
-			}
-		}
-		catch (NullPointerException e) {
-			inWave = false;
-		}
-		
-
-		
-
 	}
 
 	/**
@@ -354,5 +323,22 @@ public class GameState {
 
 	public int getWave() {
 		return wave;
+	}
+
+	public ArrayList<Enemy> findAllEnemies() {
+		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+		
+		for(Animatable a : gameObjects) {
+			if(a instanceof Enemy) {
+				enemies.add((Enemy)a);
+			}
+		}
+		
+		return enemies;
+		
+	}
+
+	public void removeGenerator() {
+		currentGenerator = null;
 	}
 }
