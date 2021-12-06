@@ -302,7 +302,7 @@ public class GameState {
 				else {
 
 					for (Animatable a : gameObjects) {
-						if (!(a instanceof TowerFire) && !(a instanceof TowerTree)) {
+						if (!(a instanceof TowerFire) && !(a instanceof TowerTree) && !(a instanceof TowerSnow)) {
 							a.update(elapsedTime);
 						}
 					}
@@ -354,5 +354,18 @@ public class GameState {
 
 	public int getWave() {
 		return wave;
+	}
+
+	public ArrayList<Enemy> findAllEnemies() {
+		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+		
+		for(Animatable a : gameObjects) {
+			if(a instanceof Enemy) {
+				enemies.add((Enemy)a);
+			}
+		}
+		
+		return enemies;
+		
 	}
 }

@@ -39,6 +39,7 @@ public class Menu implements Animatable{
 			state.addGameObject(new TowerTreeMenu(state, 640, 55));
 			state.addGameObject(new TowerFireMenu(state, 845, 55));
 			state.addGameObject(new StartButton(state , 900, 520));
+			state.addGameObject(new TowerSnowMenu(state, 640, 165));
 			undrawn = false;
 		}
 		
