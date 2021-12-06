@@ -59,6 +59,11 @@ public class Menu implements Animatable{
 		g.drawString("Credits: " + state.getCredits(), 620 , 475);
 		g.drawString("Score: " + state.getScore(), 620 , 520);
 		g.drawString("Life: " + state.getLife(), 620 , 565);
+		
+		g.setFont(new Font("TimesRoman", Font.BOLD, 12));
+		g.drawString("100 Credits", 700, 65);
+		g.drawString("500 Credits", 905, 65);
+		g.drawString("1000 Credits", 700, 175);
 	}
 
 }

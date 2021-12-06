@@ -36,6 +36,9 @@ public class EffectSnowball extends Effect implements Animatable
 		x += dx * timeElapsed * 15;
 		y += dy * timeElapsed * 15;
 		
+		if(state.findNearestEnemy(new Point (x,y)) == null)
+			return;
+		
 		if(Math.abs((state.findNearestEnemy(new Point(x, y)).getLocation().getX() - x)) < 20 &&
 				Math.abs((state.findNearestEnemy(new Point(x, y)).getLocation().getY() - y)) < 20) {
 			//Damage all enemies in range of the explosion
