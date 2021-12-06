@@ -1,8 +1,9 @@
 /**
- * Constructor for enemy elves. Base level enemies, lowest health.
+ * Makes ornament projectiles that travel from a provided point to another provided point.
+ * delete themselves and interact with enemies if they collide.
  * 
- * Gunnar and Kate
- * 11/23/21
+ *@author Gunnar and Kate
+ * @version 12/6/21
  */
 package game;
 
