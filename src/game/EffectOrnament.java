@@ -33,11 +33,13 @@ public class EffectOrnament extends Effect implements Animatable
 
 	public void update(double timeElapsed) 
 	{
-		if(lifeTime > 1)
+		if(lifeTime > 1) {
+			state.removeGameObject(this);
 			return;
-
-		x += dx * timeElapsed * 25;
-		y += dy * timeElapsed * 25;
+		}
+		
+		x += dx * timeElapsed * 15;
+		y += dy * timeElapsed * 15;
 		
 		if(Math.abs((state.findNearestEnemy(new Point(x, y)).getLocation().getX() - x)) < 20 &&
 				Math.abs((state.findNearestEnemy(new Point(x, y)).getLocation().getY() - y)) < 20) {

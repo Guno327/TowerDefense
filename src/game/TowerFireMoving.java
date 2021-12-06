@@ -45,5 +45,6 @@ public class TowerFireMoving extends Tower{
 	 */
 	public void draw(Graphics g, GameView view) {
 		view.drawCenteredImage(g,"fireplace.png", state.getMouseX(), state.getMouseY());
+		g.drawOval(state.getMouseX() - 100, state.getMouseY() - 100, 200, 200);
 	}
 }

@@ -14,6 +14,7 @@ public class TowerFire extends Tower{
 	//Fields
 	private int x;
 	private int y;
+	private double timeSinceLastBurn;
 	
 	/**
 	 * Constructor for fireplace towers. Sends the state to the superclass and stores the location of which to instantiate the object.
@@ -25,6 +26,7 @@ public class TowerFire extends Tower{
 		super(state, x, y);
 		this.x = x;
 		this.y = y;
+		timeSinceLastBurn = 0;
 	}
 	
 	
@@ -33,6 +35,17 @@ public class TowerFire extends Tower{
 	 * Required to implement animatable. Unused by this class
 	 */
 	public void update(double timeElapsed) {
+		timeSinceLastBurn += timeElapsed;
+
+		if (timeSinceLastBurn < 1)
+			return;
+
+		Enemy targeted = state.findNearestEnemy(new Point(x, y));
+
+		if (Math.abs(targeted.getLocation().getX() - x) < 100 && Math.abs(targeted.getLocation().getY() - y) < 100) {
+			targeted.burn();
+			timeSinceLastBurn = 0;
+		}
 	}
 
 	/**
