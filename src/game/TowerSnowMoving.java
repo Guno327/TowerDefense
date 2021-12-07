@@ -34,7 +34,7 @@ public class TowerSnowMoving extends Tower{
 		//if the credits are the alotted amount to purchase the snowman tower than the user can
 		//click and drag the mouse to preffered location around the path.
 		
-		if(state.getCredits() >= 100 && 
+		if(state.getCredits() >= 1000 && 
 				state.getMouseX() <= 600 &&
 				ResourceLoader.getLoader().getPath("path.txt").distanceToPath(state.getMouseX(), state.getMouseY()) > 45)
 		{
