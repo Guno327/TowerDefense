@@ -1,8 +1,8 @@
 /*
- * game over object class. Creates an object to display a game over screen.
+ * Game over object class. Creates an object to display a game over screen.
  * 
- * Gunnar and Kate
- * 11/23/21
+ * @author Gunnar and Kate
+ * @version 12/6/21
  */
 package game;
 
@@ -15,24 +15,32 @@ public class GameOver implements Animatable
 	BufferedImage image;
 	
 	/**
-	 * Constructor for game over objects. Makes an animatable object that holds a game over image.
+	 * Constructor for game over objects. Makes an animatable object that 
+	 * holds a game over image.
+	 * 
 	 * @param state The GameState
 	 */
-	public GameOver(GameState state) {
+	public GameOver(GameState state) 
+	{
+		//draws game over image 
+		
 		image = ResourceLoader.getLoader().getImage("gameover.png");
 	}
 
 	/**
 	 * Required to be animatable. Unimplemented in this class.
+	 * 
+	 * @param timeElapsed a double integer that is the time since the last 
+	 * 					  update call originated in GameControl
 	 */
 	public void update(double timeElapsed) {}
 
 	/**
 	 * Draws the game over image to the screen
 	 */
-	public void draw(Graphics g, GameView view) {
+	public void draw(Graphics g, GameView view) 
+	{
 		g.drawImage(image, 0, 0, null);
 		
 	}
-
 }

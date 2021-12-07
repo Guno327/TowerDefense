@@ -1,8 +1,8 @@
 /*
  * Interface required for objects to be animated on the screen. Requires a draw and update function
  * 
- * Gunnar and Kate 
- * 11/23/21
+ * @author Gunnar and Kate 
+ * @version 12/6/21
  */
 package game;
 

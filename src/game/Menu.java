@@ -1,8 +1,8 @@
 /**
  * Creates a menu object that contains all GUI elements for the game.
  * 
- * Gunnar and Kate
- * 11/23/21
+ * @author Gunnar and Kate
+ * @version 12/6/21
  */
 package game;
 
@@ -21,10 +21,12 @@ public class Menu implements Animatable{
 	/**
 	 * Constructor for the menu class. Gets the image for the menu from the provided image file name
 	 * and sets up the menu to be drawn on the next update call
+	 * 
 	 * @param name the file name of the image to be stored as the menu background
 	 * @param state the GameState object
 	 */
-	public Menu(String name, GameState state) {
+	public Menu(String name, GameState state) 
+	{
 		menuImage = ResourceLoader.getLoader().getImage(name);
 		this.state = state;
 		undrawn = true;
@@ -34,21 +36,23 @@ public class Menu implements Animatable{
 	 * Runs every update, should only execute code once. Adds all of the tower icons on the menu to be draw
 	 * if they have not been draw yet.
 	 */
-	public void update(double timeElapsed) {
-		if(undrawn) {
+	public void update(double timeElapsed) 
+	{
+		if(undrawn) 
+		{
 			state.addGameObject(new TowerTreeMenu(state, 640, 55));
 			state.addGameObject(new TowerFireMenu(state, 845, 55));
 			state.addGameObject(new StartButton(state , 900, 520));
 			state.addGameObject(new TowerSnowMenu(state, 640, 165));
 			undrawn = false;
 		}
-		
 	}
 
 	/**
 	 * Draws the menu background and all text elements
 	 */
-	public void draw(Graphics g, GameView view) {
+	public void draw(Graphics g, GameView view) 
+	{
 		g.drawImage(menuImage, 600, 0, null);
 		
 		//Draw menu texts
@@ -65,5 +69,4 @@ public class Menu implements Animatable{
 		g.drawString("500 Credits", 905, 65);
 		g.drawString("1000 Credits", 700, 175);
 	}
-
 }

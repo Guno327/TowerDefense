@@ -2,8 +2,8 @@
  * Creates an object to store information pertaining to the game path. It is stored as a collection of points in
  * parallel arrays.
  * 
- * Gunnar and Kate
- * 11/23/21
+ * @author Gunnar and Kate
+ * @version 12/6/21
  */
 package game;
 
@@ -15,21 +15,30 @@ import java.util.Scanner;
 public class Path {
 	
 	//Fields
+	
 	private int numPoints;
 	private int[] x;
 	private int[] y;
 	
-	 /** Constructor for the path class. Reads from the scanner provided and store all of the 
-	  * points in parallel arrays to be used by other class functions.
+	 /** Constructor for the path class. Reads from the scanner provided 
+	  * and store all of the points in parallel arrays to be used by other 
+	  * class functions.
+	  * 
      * @param s  a Scanner set up by the caller to provide a list of coordinates
      */
-	public Path(Scanner s) {
+	public Path(Scanner s) 
+	{
+		//x and y coordinates of path
+		
 		numPoints = s.nextInt();
 		x = new int[numPoints];
 		y = new int[numPoints];
 		int current = 0;
 		
-		while(s.hasNext()) {
+		//finding x and y coordinates to help draw path
+		
+		while(s.hasNext()) 
+		{
 			x[current] = s.nextInt();
 			y[current] = s.nextInt();
 			current++;
@@ -42,25 +51,35 @@ public class Path {
       * 
       * @param g   a graphics object
       */  
-	public void drawPath(Graphics g) {
+	public void drawPath(Graphics g) 
+	{
+		//draws the path in red
+		
 		g.setColor(Color.red);
 		
-		for(int countLines = 0; countLines < numPoints - 1; countLines++) {
+		//draw lines using the x and y points found in the method above
+		
+		for(int countLines = 0; countLines < numPoints - 1; countLines++) 
+		{
 			g.drawLine(x[countLines], y[countLines], x[countLines + 1], y[countLines + 1]);
 		}
 	}
 	
 	/** 
-	 * Returns the total length of the path. Since the path
-	 * is specified using screen coordinates, the length is
-	 * in pixel units (by default).
+	 * Returns the total length of the path. Since the path is specified using screen 
+	 * coordinates, the length is in pixel units (by default).
 	 * 
 	 * @return the length of the path
 	 */
-	 public double getPathLength() {
+	 public double getPathLength() 
+	 {
 		 double length = 0;
 		 
-		 for(int currentP = 0; currentP < numPoints - 1; currentP++) {
+		 //finding the path's length by finding the distance between each point recorded
+		 //above
+		 
+		 for(int currentP = 0; currentP < numPoints - 1; currentP++) 
+		 {
 			 length += distanceBetween(x[currentP + 1], x[currentP], y[currentP + 1], y[currentP]);	
 		 }
 		 
@@ -69,42 +88,60 @@ public class Path {
 	 
 	 /** 
 	  * Returns a Point object containing the location of a percent distance down the path.
+	  * 
 	  * @param percentTraveled a distance along the path
 	  * @return the screen coordinate of this position along the path
 	  */
-	  public Point getPathPosition (double percentTraveled) {
+	  public Point getPathPosition (double percentTraveled) 
+	  {
 		  int ansX;
 		  int ansY;
 		  
-		  if(percentTraveled >= 0 && percentTraveled <= 1) {
+		  //find the distance needed between the beginning point and the points preceding it
+		  
+		  if(percentTraveled >= 0 && percentTraveled <= 1) 
+		  {
+			  //distance needed between the points on the path
+			  
 			  double distanceNeeded = (percentTraveled * getPathLength());
 			  int point = 0;
 			  boolean found = false;
 			  
-			  while(!found) {
+			  //the distance needed between the x and y coordinates on the path
+			  
+			  while(!found) 
+			  {
 				  double distance = distanceBetween(x[point], x[point + 1], y[point], y[point + 1]);
-				  if(distanceNeeded > distance) {
+				  if(distanceNeeded > distance) 
+				  {
 					  distanceNeeded -= distance;
 					  point++;
 				  }
 				  
-				  else {
+				  else 
+				  {
 					  found = true;
 				  }
 			  }
 			  
+			  //the percent of the distance between each point
+			  
 			  double percent = distanceNeeded / distanceBetween(x[point], x[point + 1], y[point], y[point + 1]);
+			  
+			  //the final percentage between points x and y
 			  
 			  ansX =(int) (x[point] * (1-percent) + x[point + 1] * percent);
 			  ansY = (int) (y[point] * (1-percent) + y[point + 1] * percent);
 		  }
 		  
-		  else if(percentTraveled < 0){
+		  else if(percentTraveled < 0)
+		  {
 			  ansX = x[0];
 			  ansY = y[0];
 		  }
 		  
-		  else {
+		  else 
+		  {
 			  ansX = x[numPoints - 1];
 			  ansY = y[numPoints -1];
 		  }
@@ -115,26 +152,33 @@ public class Path {
 	  
 	  /**
 	   * Calculated the distance between two points in space.
+	   * 
 	   * @param xOne x-value of the first point
 	   * @param xTwo x-value of the second point
 	   * @param yOne y-value of the first point
 	   * @param yTwo y-value of the second point
 	   * @return a double value containing the calculated distance between the two points.
 	   */
-	  private static double distanceBetween(int xOne, int xTwo, int yOne, int yTwo) {
+	  private static double distanceBetween(int xOne, int xTwo, int yOne, int yTwo) 
+	  {
 		  double distance = Math.sqrt((xTwo - xOne) * (xTwo - xOne) + 
 					 (yTwo - yOne) * (yTwo - yOne));
 		  return distance;
 	  }
 	  
-	  public double distanceToPath(int clickX, int clickY) {
+	  public double distanceToPath(int clickX, int clickY) 
+	  {
 		  //Initialize starting points
+		  
 		  double distance = distanceBetween(clickX, (int)getPathPosition(0).getX(), clickY, (int)getPathPosition(0).getY());
 		  
 		  //find the nearest point
-		  for(double i = 0.001; i <= 1.0; i += 0.001) {
+		  
+		  for(double i = 0.001; i <= 1.0; i += 0.001) 
+		  {
 			  double currentDistance = distanceBetween(clickX, (int)getPathPosition(i).getX(), clickY, (int)getPathPosition(i).getY());
-			  if(distance > currentDistance) {
+			  if(distance > currentDistance) 
+			  {
 				  distance = currentDistance;
 			  }
 		  }

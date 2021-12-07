@@ -1,8 +1,8 @@
 /*
  * Contains all functions related to drawing the frame.
  * 
- * Gunnar and Kate
- * 11/23/21
+ * @author Gunnar and Kate
+ * @version 12/6/21
  */
 package game;
 
@@ -19,9 +19,11 @@ import javax.swing.JPanel;
 public class GameView extends JPanel implements MouseListener, MouseMotionListener
 {
 	// This constant is needed to get rid of a warning.  It won't matter to us.
+	
 	private static final long serialVersionUID = 1L;
 	
 	// Fields
+	
 	private Path myPath;
 	private GameState state;
 
@@ -33,29 +35,35 @@ public class GameView extends JPanel implements MouseListener, MouseMotionListen
     public GameView (GameState state)
     {
     	//Initialize fields
+    	
     	this.state = state;
 	    myPath = ResourceLoader.getLoader().getPath("path.txt");
 
     	// Build the frame.  The frame object represents the application 'window'.
+	    
     	JFrame frame = new JFrame ("Tower Defense 2021");
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     	// Add a drawing area to the frame (a panel).  Note that 'this' object IS the
     	// panel that we need, so we add it.
+    	
     	JPanel p = this;
     	frame.setContentPane(p);
     	
-    	// Set the size of 'this' panel to match the size of the backdrop and menu.    	
+    	// Set the size of 'this' panel to match the size of the backdrop and menu. 
+    	
     	Dimension d = new Dimension(1000, 600);
     	this.setMinimumSize(d);
     	this.setPreferredSize(d);
     	this.setMaximumSize(d);
     	
     	// Allow the JFrame to layout the window (by 'packing' it) and make it visible.
+    	
     	frame.pack();
     	frame.setVisible(true);
     	
     	//Sets up the mouse listener to send the event to this class
+    	
     	this.addMouseListener(this);
     	this.addMouseMotionListener(this);
     	
@@ -107,8 +115,5 @@ public class GameView extends JPanel implements MouseListener, MouseMotionListen
 	public void mouseMoved(MouseEvent e) 
 	{
 		state.setMouseLocation(e.getX(), e.getY());	
-	}
-
-
-	
+	}	
 }
