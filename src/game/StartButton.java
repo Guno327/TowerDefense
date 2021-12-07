@@ -1,5 +1,5 @@
 /*
- * Class for the menu icons for the tree tower.
+ * Class for the menu icon for the tree tower.
  * 
  * @author Gunnar and Kate
  * @version 12/6/21

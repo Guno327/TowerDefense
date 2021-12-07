@@ -11,7 +11,6 @@ import java.awt.Point;
 abstract public class Enemy implements Animatable{
 	
 	//Fields
-	
 	protected GameState state;
 	protected boolean isBurning;
 	protected int health;

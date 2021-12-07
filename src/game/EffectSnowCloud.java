@@ -13,7 +13,6 @@ import java.awt.Point;
 public class EffectSnowCloud extends Effect implements Animatable
 {
 	//fields
-	
 	private int x,y;
 	private double lifeTime;
 	

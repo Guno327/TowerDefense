@@ -1,6 +1,7 @@
 /**
  * Makes ornament projectiles that travel from a provided point to another provided point.
  * delete themselves and interact with enemies if they collide.
+ * delte themselves if they leave the visible are of the screen
  * 
  *@author Gunnar and Kate
  * @version 12/6/21

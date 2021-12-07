@@ -1,6 +1,6 @@
 /**
  * Makes snowball effect that travel from a provided point to another point
- * and delete themselves after interacting with enemies.
+ * and delete themselves after interacting with enemies and spawns a snowCloud effect at the point of collision.
  * 
  * @author Gunnar and Kate
  * @version 12/6/21
@@ -14,11 +14,10 @@ import java.util.ArrayList;
 public class EffectSnowball extends Effect implements Animatable
 {
 	//fields
-	
 	private int x,y,dx,dy;
 	
 	/**
-	 * Constructor for spawning snowball effect at specified tower.
+	 * Constructor for spawning snowball effect at specified point.
 	 * 
 	 * @param state GameState object
 	 * @param position where to load the snowball effect 

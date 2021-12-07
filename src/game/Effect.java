@@ -8,6 +8,7 @@ package game;
 
 abstract public class Effect implements Animatable{
 	
+	//Fields
 	protected GameState state;
 
 	
